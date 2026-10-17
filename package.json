@@ -1,0 +1,13 @@
+{
+  "name": "agent-scope-lab",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/web"],
+  "scripts": {
+    "dev:web": "vite apps/web --config apps/web/vite.config.ts",
+    "build": "npm --workspace apps/web run build",
+    "lint": "npm --workspace apps/web run lint",
+    "typecheck": "npm --workspace apps/web run typecheck",
+    "test:unit": "npm --workspace apps/web run test:unit"
+  }
+}
