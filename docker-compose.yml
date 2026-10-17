@@ -1,0 +1,53 @@
+name: agentscope
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: infra/web.Dockerfile
+    ports:
+      - "${AGENTSCOPE_WEB_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/api.Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-sqlite:////app/data/agentscope.db}
+    ports:
+      - "${AGENTSCOPE_API_PORT:-8000}:8000"
+    volumes:
+      - agentscope-api-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    profiles: [postgres]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-agentscope}
+      POSTGRES_USER: ${POSTGRES_USER:-agentscope}
+      # Development-only fallback; replace it via .env or a secret before exposure.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-locally}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - agentscope-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  agentscope-api-data:
+  agentscope-postgres-data:

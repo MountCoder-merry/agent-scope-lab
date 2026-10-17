@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "project": "agent-scope-lab",
+  "phase": "M4",
+  "overall_status": "in_progress",
+  "last_completed_milestone": "M3",
+  "public_demo_url": null,
+  "verified_demo_url": null,
+  "quality_gates_passed": false,
+  "blockers": [
+    "Docker CLI is not installed on the current Windows environment; container verification is deferred."
+  ],
+  "next_action": "Add Playwright coverage for JSON import and responsive layout, then prepare the static-demo CI/release gate.",
+  "updated_at": "2026-10-17T03:47:10Z"
+}
