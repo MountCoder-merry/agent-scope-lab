@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "agent-scope-lab",
-  "phase": "M5",
+  "phase": "M8",
   "overall_status": "in_progress",
   "last_completed_milestone": "M7",
   "public_demo_url": "https://mountcoder-merry.github.io/agent-scope-lab/",
@@ -9,8 +9,8 @@
   "quality_gates_passed": false,
   "blockers": [
     "Docker CLI is unavailable, so Compose image/health/restart gates remain unverified.",
-    "pip-audit is installed but Python dependency vulnerability queries time out in the current environment."
+    "Pinned top-level pip-audit reports no known vulnerabilities; full Python transitive dependency query times out in the current environment."
   ],
-  "next_action": "Keep the release in_progress until Docker Compose and Python dependency audit can run in an environment that provides those gates; do not deploy the backend publicly.",
-  "updated_at": "2026-10-17T13:17:00Z"
+  "next_action": "Run Docker Compose build/health/restart and a bounded Python dependency audit in an environment where those tools are available; keep backend self-host-ready and non-public.",
+  "updated_at": "2026-10-17T14:05:00Z"
 }

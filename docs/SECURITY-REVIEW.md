@@ -10,13 +10,14 @@
 | 项目 | 状态 | 证据/后续动作 |
 | --- | --- | --- |
 | 导入 JSON 不执行 | `reviewed` | Web 使用 JSON.parse + Zod；不得使用 `eval`/危险 HTML。新增 schema 时补充回归测试。 |
-| Payload 大小/深度/数量限制 | `reviewed` | 当前 Web 校验限制 1 MiB；API 完整导入限制在 M6 落地并做集成测试。 |
+| Payload 大小/深度/数量限制 | `reviewed` | Web/API 导入限制 1 MiB；API 限制最大深度 12、500 spans、5000 events、16 KiB 字符串，并有回归测试。 |
 | XSS/HTML 注入 | `reviewed` | UI 文本使用 React 默认转义；禁止 `dangerouslySetInnerHTML`。 |
-| API secret/日志脱敏 | `reviewed` | 错误响应只返回稳定错误码和结构化 details；仓库扫描未发现真实令牌或 `.env`。公网 API 仍不发布。 |
-| 依赖审计 | `partial` | `npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high` → 0 vulnerabilities；已安装 `pip-audit`，对 Python 依赖的 PyPI/OSV 查询在当前环境超时，不能声明通过。 |
+| API secret/日志脱敏 | `reviewed` | 错误响应只返回稳定错误码和结构化 details；访问日志只记录 request id、方法、路径、状态、耗时和客户端标识，不记录 body/query/token；仓库扫描未发现真实令牌或 `.env`。公网 API 仍不发布。 |
+| 写入限流 | `reviewed` | `RequestGuardMiddleware` 对 API 写请求使用 60 秒滑动窗口（默认 30 次/IP，可由 `AGENTSCOPE_WRITE_RATE_LIMIT` 调整），超限返回 `RATE_LIMITED`；多 worker 部署仍需在反向代理启用共享限流。 |
+| 依赖审计 | `partial` | npm audit → 0 vulnerabilities；受限的 Python 顶层依赖审计（pinned requirements + `--no-deps`）→ no known vulnerabilities；完整传递依赖查询在当前 PyPI/OSV 环境超时，不能扩大声明。 |
 | Git secret scan | `reviewed` | 工作树扫描仅发现 `.env.example` 占位密码和文档术语；无真实凭据。提交前继续复核。 |
 | Docker 镜像/Compose | `static-reviewed` | 已加入非 root API 用户、健康检查和可选 Postgres；Docker CLI 缺失时不能声称容器通过。 |
-| GitHub Pages | `pending` | 仅发布静态 `apps/web/dist`；需新仓库 Actions 成功、HTTPS 200 和独立浏览器 smoke。 |
+| GitHub Pages | `reviewed` | 仅发布静态 `apps/web/dist`；新仓库 Actions 成功、HTTPS 200、资源 200 和独立浏览器 smoke 已有发布记录。 |
 
 ## 必须保持的约束
 

@@ -81,3 +81,12 @@ def test_scenarios_and_experiment_lifecycle() -> None:
         fetched = client.get(f"/api/v1/experiments/{experiment_id}")
         assert fetched.status_code == 200
         assert fetched.json()["result"]["error_code"] == "INVALID_JSON"
+
+        input_sensitive = client.post(
+            "/api/v1/experiments",
+            json={"scenarioId": "tool-timeout", "strategyId": "bounded-retry", "input": {"failure_mode": "empty"}},
+        )
+        assert input_sensitive.status_code == 201
+        second_run = client.post(f"/api/v1/experiments/{input_sensitive.json()['experiment_id']}/run")
+        assert second_run.status_code == 200
+        assert second_run.json()["status"] == "failed"

@@ -9,6 +9,8 @@
 
 静态 Demo 不含 API Key、账号、真实 trace 或服务端执行能力。
 
+API 写请求默认使用 60 秒滑动窗口限流（每客户端 30 次，可通过 `AGENTSCOPE_WRITE_RATE_LIMIT` 配置），并输出不含请求体、查询参数或 Token 的结构化访问日志。多 worker/多副本环境仍需反向代理提供共享限流、认证和 TLS。
+
 ## 自托管（P1）
 
 Docker Compose 目标服务为 `web`、`api` 和可选 `db`。当前环境 Docker 缺失，配置完成后需在 Docker 可用环境运行迁移、健康检查、API 集成和重启持久化验证。

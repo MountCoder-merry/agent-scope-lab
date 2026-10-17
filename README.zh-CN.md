@@ -80,6 +80,7 @@ docker compose --profile postgres up --build
 - 导入 JSON 仅作为数据解析，禁止 HTML、脚本、shell、任意工具和网络副作用。
 - 所有案例均为 synthetic fixtures；Recorded replay 不会重新调用模型或工具。
 - API 已支持 SQLite 默认持久化、Alembic 初始迁移和 Mock 实验；PostgreSQL 使用 Compose profile，公网鉴权和真实 Agent 执行仍不在本 Demo 范围内。
+- API 写请求默认使用 60 秒滑动窗口限流（每客户端 30 次，可通过 `AGENTSCOPE_WRITE_RATE_LIMIT` 配置），并输出不含请求体/Token 的结构化访问日志；多副本部署仍需反向代理提供共享限流和认证。
 - Docker、GitHub 权限或 Pages 设置不可用时，发布门禁会如实记录阻塞，不绕过安全控制。
 
 详细审查见 [docs/SECURITY-REVIEW.md](docs/SECURITY-REVIEW.md)，部署和回滚见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)。

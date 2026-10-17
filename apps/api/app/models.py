@@ -101,6 +101,7 @@ class Experiment(Base):
     scenario_id: Mapped[str] = mapped_column(String(64), index=True)
     strategy_id: Mapped[str] = mapped_column(String(64))
     input_hash: Mapped[str] = mapped_column(String(64))
+    input_json: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     status: Mapped[str] = mapped_column(String(16), default="created", index=True)
     result_json: Mapped[dict] = mapped_column(JSON, default=dict)
     assertions_json: Mapped[dict] = mapped_column(JSON, default=dict)

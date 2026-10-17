@@ -106,4 +106,13 @@
 ### 未完成门禁
 
 - Docker CLI 缺失，未伪造 Compose 构建/健康/重启通过。
-- npm audit 已通过（0 vulnerabilities）；pip-audit 已安装但当前 PyPI/OSV 查询超时，Python 审计保持 pending。
+- npm audit 已通过（0 vulnerabilities）；受限 pinned 顶层 Python 依赖审计返回 no known vulnerabilities；完整传递依赖查询超时，保持 pending。
+
+## 2026-10-17 — M8 安全边界补强
+
+- 新增 `apps/api/app/security.py`：1 MiB 请求头边界、API 写请求滑动窗口限流、`RATE_LIMITED`/`LIMIT_EXCEEDED` 稳定错误和不含 body/query/token 的 JSON 访问日志。
+- 新增 `apps/api/tests/test_security.py`，覆盖限流窗口、超大请求拒绝、request id 和结构化日志证据。
+- `python -m pytest -q apps/api` → 10 passed；`ruff check apps/api` → 通过。
+- Docker CLI 和完整 Python 传递依赖漏洞查询仍是环境阻塞，未声明 M8 完整门禁通过。
+- 受限审计发现的 `langgraph 0.6.11 / PYSEC-2026-83` 已通过将约束升级到 `langgraph>=1.0.10,<2` 修复；升级后的 runner/API 回归测试通过。
+- 新增 0002 migration，覆盖已有 0001 schema 为 Experiment 增加 `input_json`；API run 现在会使用持久化的实验输入，不再只保存 hash。

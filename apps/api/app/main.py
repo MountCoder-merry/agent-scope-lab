@@ -31,6 +31,7 @@ from .schemas import (
     TraceResponse,
     TraceSummary,
 )
+from .security import RequestGuardMiddleware
 from .validation import TraceValidationError, parse_json_bytes
 
 
@@ -41,6 +42,7 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="AgentScope API", version="0.2.0", docs_url="/docs", lifespan=lifespan)
+app.add_middleware(RequestGuardMiddleware)
 
 
 @app.exception_handler(TraceValidationError)
@@ -199,7 +201,7 @@ def create_experiment(payload: ExperimentCreate, db: Session = Depends(get_db)) 
     if payload.trace_id:
         _get_trace(payload.trace_id, db)
     payload_bytes = json.dumps(payload.input, sort_keys=True, separators=(",", ":")).encode()
-    experiment = Experiment(trace_id=payload.trace_id, scenario_id=payload.scenario_id, strategy_id=payload.strategy_id, input_hash=hashlib.sha256(payload_bytes).hexdigest())
+    experiment = Experiment(trace_id=payload.trace_id, scenario_id=payload.scenario_id, strategy_id=payload.strategy_id, input_hash=hashlib.sha256(payload_bytes).hexdigest(), input_json=payload.input)
     db.add(experiment)
     db.commit()
     db.refresh(experiment)
@@ -211,7 +213,7 @@ def run_experiment(experiment_id: str, db: Session = Depends(get_db)) -> Experim
     experiment = db.get(Experiment, experiment_id)
     if experiment is None:
         raise _error("NOT_FOUND", "experiment not found", {"experiment_id": experiment_id}, 404)
-    result = run_mock(scenario_id=experiment.scenario_id, strategy_id=experiment.strategy_id)
+    result = run_mock(scenario_id=experiment.scenario_id, strategy_id=experiment.strategy_id, input_data=experiment.input_json or {})
     experiment.status = result["status"]
     experiment.retries = int(result.get("retries", 0))
     experiment.virtual_duration_ms = int(result.get("virtual_duration_ms", 0))

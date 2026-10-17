@@ -38,9 +38,10 @@
 
 - [x] FastAPI + SQLite/Alembic 迁移、查询/导入闭环、LangGraph adapter 和确定性 Mock Runner。
 - [x] API 合同、实验生命周期、迁移和重启后 SQLite 保留测试。
-- [ ] Docker Compose、集成测试、脱敏、限流、审计；Docker 可用后执行容器门禁。
+- [x] API 集成测试、脱敏、写入限流、结构化日志和审计材料。
+- [ ] Docker Compose 镜像/健康/重启门禁；Docker 可用后执行。
 
 ## M9 — 发布与维护（进行中）
 
 - [x] 发布报告、变更记录、回滚说明、维护手册和线上 Demo 证据。
-- [ ] Docker Compose 容器门禁和 Python 依赖审计完成后，才能将整体状态标记为 completed。
+- [ ] Docker Compose 容器门禁和完整 Python 传递依赖审计完成后，才能将整体状态标记为 completed。

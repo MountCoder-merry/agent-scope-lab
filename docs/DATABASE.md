@@ -18,7 +18,7 @@ P0 不需要数据库，使用版本化只读 fixture。P1 使用 SQLAlchemy 2 +
 
 ### `mock_runs`
 
-`id`、`trace_id`、`scenario_id`、`strategy_id`、`input_hash`、`result_json`、`assertions_json`、`created_at`。
+`id`、`trace_id`、`scenario_id`、`strategy_id`、`input_hash`、`input_json`、`result_json`、`assertions_json`、`created_at`。`input_json` 只保存经过 Pydantic 字段边界的实验数据，用于重复运行时保持同一策略输入；不执行其中的文本、命令或 URL。
 
 ## 约束与索引
 
@@ -30,5 +30,6 @@ P0 不需要数据库，使用版本化只读 fixture。P1 使用 SQLAlchemy 2 +
 ## 迁移与恢复
 
 - 每次 schema 改动必须有 Alembic migration 和向后兼容说明。
+- `0002_experiment_input` 为已有 `0001_initial` 数据库增加可重复运行所需的 `experiments.input_json`；旧记录允许为空，新建实验始终保存经过边界校验的输入。
 - 导入使用事务，任何关系校验失败全部回滚。
 - SQLite 重启验证属于 M6；PostgreSQL 只做兼容集成测试，不在 P0 引入生产依赖。

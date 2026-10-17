@@ -2,13 +2,13 @@
 
 ## 当前阻塞
 
-### Python 依赖审计工具不可用
+### Python 依赖传递审计查询超时
 
 - **状态**：待处理，不阻塞本地功能验证。
-- **证据**：`npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high` 已返回 0 vulnerabilities；已安装 `pip-audit`，对项目依赖执行时当前 PyPI/OSV 查询超时。
-- **影响**：本轮只能声明 npm 依赖审计通过，不能声明 Python 依赖审计完整通过。
+- **证据**：npm audit 已返回 0 vulnerabilities；`pip-audit` 对锁定的顶层运行依赖（`--disable-pip --no-deps`）返回 `No known vulnerabilities found`，但完整传递依赖解析在当前 PyPI/OSV 查询环境超时。
+- **影响**：不能把受限顶层结果扩大为完整 Python 供应链审计结论。
 - **安全处理**：不伪造审计结果；保留 lockfile、记录命令和阻塞原因。
-- **解除方式**：安装/运行 pip-audit 并记录完整结果。
+- **解除方式**：在可访问 PyPI/OSV 的环境执行不带 `--no-deps` 的完整锁定依赖审计，并保存结果。
 
 ### Docker CLI 缺失
 
