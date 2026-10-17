@@ -6,8 +6,8 @@ AgentScope is a local-first AI-agent trace debugging workbench. It visualizes sy
 
 ## 当前状态
 
-- 已完成 M0–M3：产品/架构契约、React/Vite Web、FastAPI health 骨架、三个合成案例、执行图、时间线、Span Inspector、Failure Lab、JSON 导入验证。
-- 当前进入 M4：补齐浏览器导入/响应式覆盖、CI 与静态 Demo 发布门禁。
+- 已完成 M0–M7 的本地实现：产品/架构契约、React/Vite Web、HashRouter 路由、React Flow 执行图、三个合成案例、事件回放、Span Inspector、Failure Lab、JSON 导入验证，以及 FastAPI + SQLAlchemy/Alembic 的 Trace/Experiment 闭环。
+- 当前处于 M4–M9 发布核验阶段：CI、Pages 和自托管材料已落盘；公开 Pages、Docker 容器和依赖审计仍需真实环境门禁，未验证前不会标记为完成。
 - Docker 当前环境不可用，因此容器化验证延后；见 [`docs/BLOCKERS.md`](docs/BLOCKERS.md)。
 
 ## 本地运行
@@ -19,11 +19,13 @@ npm install
 npm run dev:web
 ```
 
-然后打开 Vite 输出的本地地址。API 骨架（可选）：
+然后打开 Vite 输出的本地地址。API（可选，默认 SQLite；迁移文件位于 `apps/api/migrations`）：
 
 ```powershell
 python -m uvicorn apps.api.app.main:app --reload
 ```
+
+如需使用 PostgreSQL，可设置 `DATABASE_URL`；Docker Compose 中的 `postgres` profile 提供本地可选服务。
 
 ## 验证
 
@@ -33,6 +35,7 @@ npm run typecheck
 npm run test:unit
 npm run build
 python -m pytest -q apps/api
+ruff check apps/api
 ```
 
 浏览器 smoke（需要 Playwright Chromium）：
@@ -43,7 +46,7 @@ python C:\Users\Lenovo1\.agents\skills\webapp-testing\scripts\with_server.py `
   -- python scripts/verify_ui.py
 ```
 
-截图和工程状态分别见 [`docs/screenshots/m3-desktop.png`](docs/screenshots/m3-desktop.png) 与 [`docs/AUTONOMOUS_STATE.json`](docs/AUTONOMOUS_STATE.json)。
+截图和工程状态分别见 [`docs/screenshots/m3-desktop.png`](docs/screenshots/m3-desktop.png)、[`docs/release-report.md`](docs/release-report.md) 与 [`docs/AUTONOMOUS_STATE.json`](docs/AUTONOMOUS_STATE.json)。
 
 ## 边界
 

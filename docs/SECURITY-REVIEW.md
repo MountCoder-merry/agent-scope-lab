@@ -13,7 +13,7 @@
 | Payload 大小/深度/数量限制 | `reviewed` | 当前 Web 校验限制 1 MiB；API 完整导入限制在 M6 落地并做集成测试。 |
 | XSS/HTML 注入 | `reviewed` | UI 文本使用 React 默认转义；禁止 `dangerouslySetInnerHTML`。 |
 | API secret/日志脱敏 | `reviewed` | 错误响应只返回稳定错误码和结构化 details；仓库扫描未发现真实令牌或 `.env`。公网 API 仍不发布。 |
-| 依赖审计 | `blocked` | `npm audit --omit=dev` 被当前 `registry.npmmirror.com` 的 audit endpoint 返回 404；`pip-audit` 未安装，不能伪造通过。 |
+| 依赖审计 | `partial` | `npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high` → 0 vulnerabilities；已安装 `pip-audit`，对 Python 依赖的 PyPI/OSV 查询在当前环境超时，不能声明通过。 |
 | Git secret scan | `reviewed` | 工作树扫描仅发现 `.env.example` 占位密码和文档术语；无真实凭据。提交前继续复核。 |
 | Docker 镜像/Compose | `static-reviewed` | 已加入非 root API 用户、健康检查和可选 Postgres；Docker CLI 缺失时不能声称容器通过。 |
 | GitHub Pages | `pending` | 仅发布静态 `apps/web/dist`；需新仓库 Actions 成功、HTTPS 200 和独立浏览器 smoke。 |

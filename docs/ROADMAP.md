@@ -37,6 +37,7 @@
 ## M6–M8 — 后端闭环与工程质量（部分完成）
 
 - [x] FastAPI + SQLite/Alembic 迁移、查询/导入闭环、LangGraph adapter 和确定性 Mock Runner。
+- [x] API 合同、实验生命周期、迁移和重启后 SQLite 保留测试。
 - [ ] Docker Compose、集成测试、脱敏、限流、审计；Docker 可用后执行容器门禁。
 
 ## M9 — 发布与维护

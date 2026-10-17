@@ -19,11 +19,11 @@
 | Web typecheck | `npm run typecheck` | 通过（0） |
 | Web unit | `npm run test:unit` | 3 passed（0） |
 | Web build | `npm run build` | 通过（0；有第三方注释和 chunk size warning） |
-| API tests | `python -m pytest -q apps/api` | 5 passed（0；LangGraph 弃用警告） |
+| API tests | `python -m pytest -q apps/api` | 6 passed（0；LangGraph 弃用警告） |
 | API lint | `ruff check apps/api` | 通过（0） |
 | Fresh migration | `alembic upgrade head` on fresh SQLite | 通过（0） |
 | Browser smoke | `python scripts/verify_ui.py` | 通过；routes/import/mobile verified |
-| Dependency audit | `npm audit --omit=dev` / `pip-audit` | npm audit blocked by registry 404；pip-audit unavailable |
+| Dependency audit | `npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high` / `pip-audit` | npm audit 0 vulnerabilities；pip-audit 已安装但 Python 依赖查询超时 |
 | Docker Compose | `docker compose config` / `up --build` | YAML 静态解析通过；Docker CLI 缺失，不能声称容器通过 |
 | Pages | Actions run + HTTPS/browser smoke | 未创建/验证公开 URL，保持阻塞 |
 

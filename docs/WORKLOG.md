@@ -60,3 +60,30 @@
 
 - 新增项目级双语 `README.md`，说明本地启动、测试、截图和 P0 安全边界。
 - 最终 JSON 状态解析和 `git diff --check` 通过；未创建提交、远程仓库或部署资源。
+
+## 2026-10-17 — M4–M7 静态 Demo、API 闭环与实验引擎
+
+### 完成
+
+- Web 增加 HashRouter 路由、React Flow 图、TraceDataSource 契约、导入/空态/错误态/移动端处理和 Playwright smoke。
+- API 增加 SQLAlchemy 模型、Alembic 初始迁移、SQLite 默认与 PostgreSQL URL 兼容、事务导入、分页筛选、实验生命周期和确定性 LangGraph/Mock Runner。
+- CI、GitHub Pages workflow、Compose、自托管 Dockerfile、双语 README、安全审查和发布报告落盘。
+
+### 实际检查
+
+- `npm run lint` → 通过（0）。
+- `npm run typecheck` → 通过（0）。
+- `npm run test:unit` → 3 passed（0）。
+- `npm run build` → 通过（0；Vite 第三方注释/chunk 大小 warning）。
+- `python -m pytest -q apps/api` → 6 passed（0；LangGraph 弃用 warning）。
+- `ruff check apps/api` → 通过（0）。
+- 新 SQLite 执行 `alembic upgrade head` → 通过（0）。
+- Playwright `scripts/verify_ui.py` → `ui-smoke: ok; routes/import/mobile verified`。
+- Compose YAML 静态解析 → 通过；Docker CLI 缺失，未执行容器门禁。
+- `npm audit` → 当前镜像 audit endpoint 404；`pip-audit` → 命令不可用，均记录为阻塞。
+
+### Git 记录
+
+- `bd071a0 feat: deliver trace workbench MVP`
+- `0a0e45a feat: add self-hosted trace API and experiments`
+- `079320b ci: add release, security, and self-hosting gates`
