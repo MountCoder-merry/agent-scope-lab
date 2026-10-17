@@ -116,3 +116,4 @@
 - Docker CLI 和完整 Python 传递依赖漏洞查询仍是环境阻塞，未声明 M8 完整门禁通过。
 - 受限审计发现的 `langgraph 0.6.11 / PYSEC-2026-83` 已通过将约束升级到 `langgraph>=1.0.10,<2` 修复；升级后的 runner/API 回归测试通过。
 - 新增 0002 migration，覆盖已有 0001 schema 为 Experiment 增加 `input_json`；API run 现在会使用持久化的实验输入，不再只保存 hash。
+- 推送 `d68c03e` 后 CI `39047031950`（Web/API/Browser smoke）和 Pages `39047031946` 均成功。

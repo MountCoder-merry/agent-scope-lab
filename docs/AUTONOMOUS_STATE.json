@@ -12,5 +12,5 @@
     "Pinned top-level pip-audit reports no known vulnerabilities; full Python transitive dependency query times out in the current environment."
   ],
   "next_action": "Run Docker Compose build/health/restart and a bounded Python dependency audit in an environment where those tools are available; keep backend self-host-ready and non-public.",
-  "updated_at": "2026-10-17T14:05:00Z"
+  "updated_at": "2026-10-17T15:55:16Z"
 }

@@ -25,7 +25,7 @@
 | Browser smoke | `python scripts/verify_ui.py` | 通过；routes/import/mobile verified |
 | Dependency audit | npm audit / pinned top-level `pip-audit --disable-pip --no-deps` | npm 0 vulnerabilities；顶层 Python 依赖 no known vulnerabilities；完整传递依赖查询超时 |
 | Docker Compose | `docker compose config` / `up --build` | YAML 静态解析通过；Docker CLI 缺失，不能声称容器通过 |
-| Pages | Actions `39035663912`; HTTP/asset/Playwright verification | 通过；HTTPS 200、脚本/CSS 200、独立 smoke 通过 |
+| Pages | Actions `39047031946`; HTTP/asset/Playwright verification | 通过；HTTPS 200、脚本/CSS 200、独立 smoke 通过 |
 
 ## 发布地址
 
@@ -45,4 +45,4 @@
 1. API 已完成 SQLAlchemy/Alembic、导入事务和确定性实验；PostgreSQL 与容器重启验证待 Docker/数据库环境。
 2. 当前环境没有 Docker CLI，Compose 构建、健康检查、Postgres profile 和重启验证未执行。
 3. `pip-audit` 的顶层 pinned 依赖审计已返回 no known vulnerabilities；完整传递依赖查询在当前环境超时；npm audit 已返回 0 vulnerabilities。
-4. 公开仓库 `MountCoder-merry/agent-scope-lab`、CI run `39035663894`、Pages run `39035663912` 和线上 URL 已完成真实验证；整体仍保持 `in_progress`，直到上述环境门禁可执行。
+4. 公开仓库 `MountCoder-merry/agent-scope-lab`、CI run `39047031950`、Pages run `39047031946` 和线上 URL 已完成真实验证；整体仍保持 `in_progress`，直到上述环境门禁可执行。
