@@ -32,7 +32,7 @@
 
 - [x] 三个案例、事件回放、Failure Lab Mock、JSON 导入、统计和基础响应式样式。
 - [x] Playwright 覆盖导入文件和窄视口；CI、Pages workflow 和安全审查材料。
-- [ ] 新仓库 Actions 成功、Pages HTTPS 200、资源无 404，并完成独立浏览器线上 smoke。
+- [x] 新仓库 Actions 成功、Pages HTTPS 200、资源无 404，并完成独立浏览器线上 smoke（Docker/Python 审计仍为独立阻塞）。
 
 ## M6–M8 — 后端闭环与工程质量（部分完成）
 
@@ -40,6 +40,7 @@
 - [x] API 合同、实验生命周期、迁移和重启后 SQLite 保留测试。
 - [ ] Docker Compose、集成测试、脱敏、限流、审计；Docker 可用后执行容器门禁。
 
-## M9 — 发布与维护
+## M9 — 发布与维护（进行中）
 
-- [ ] 发布报告、变更记录、回滚说明、维护手册和最终质量门禁。
+- [x] 发布报告、变更记录、回滚说明、维护手册和线上 Demo 证据。
+- [ ] Docker Compose 容器门禁和 Python 依赖审计完成后，才能将整体状态标记为 completed。

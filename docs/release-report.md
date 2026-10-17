@@ -25,12 +25,12 @@
 | Browser smoke | `python scripts/verify_ui.py` | 通过；routes/import/mobile verified |
 | Dependency audit | `npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high` / `pip-audit` | npm audit 0 vulnerabilities；pip-audit 已安装但 Python 依赖查询超时 |
 | Docker Compose | `docker compose config` / `up --build` | YAML 静态解析通过；Docker CLI 缺失，不能声称容器通过 |
-| Pages | Actions run + HTTPS/browser smoke | 未创建/验证公开 URL，保持阻塞 |
+| Pages | Actions `39035418565`; HTTP/asset/Playwright verification | 通过；HTTPS 200、脚本/CSS 200、独立 smoke 通过 |
 
 ## 发布地址
 
-- `public_demo_url`: `null`（未实际发布）
-- `verified_demo_url`: `null`（未通过独立 HTTP/浏览器验证）
+- `public_demo_url`: `https://mountcoder-merry.github.io/agent-scope-lab/`
+- `verified_demo_url`: `https://mountcoder-merry.github.io/agent-scope-lab/`
 
 不要将仓库名推断为已发布地址。GitHub Pages 需要新仓库、Actions 权限和 Pages 发布源设置。
 
@@ -44,5 +44,6 @@
 
 1. API 已完成 SQLAlchemy/Alembic、导入事务和确定性实验；PostgreSQL 与容器重启验证待 Docker/数据库环境。
 2. 当前环境没有 Docker CLI，容器构建、健康检查和 Postgres profile 只能在 Docker 可用环境验证。
-3. 公开仓库和 Pages URL 尚未在本任务中创建或验证；不得声称公网 Demo 已上线。
-4. 创建新仓库并完成 Pages Actions/HTTPS 验证后，回填 commit SHA、CI run 链接和 Demo URL；在此之前保持 `in_progress`。
+3. Docker CLI 不可用，Compose 构建、健康检查、Postgres profile 和重启验证未执行。
+4. `pip-audit` 已安装但当前 Python 依赖漏洞查询超时；npm audit 已返回 0 vulnerabilities。
+5. 公开仓库 `MountCoder-merry/agent-scope-lab`、CI run `39035418868`、Pages run `39035418565` 和线上 URL 已完成真实验证；整体仍保持 `in_progress`，直到上述环境门禁可执行。

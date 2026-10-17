@@ -19,4 +19,4 @@
 - **解除方式**：在本机安装并启用 Docker Desktop（由用户按其安全策略完成），然后重新运行容器门禁。
 - **可继续工作**：React/FastAPI 源码、单元测试、静态构建、Playwright 浏览器验证和部署文档。
 
-没有发现需要立即人工授权的 GitHub 发布阻塞；GitHub CLI 当前显示已登录，但任何远程仓库创建或发布动作仍需在对应里程碑核验目标为本项目专用仓库。
+GitHub 发布阻塞已解除：已创建专用公开仓库 `MountCoder-merry/agent-scope-lab`，Pages workflow 和线上浏览器核验均通过。Docker 与 Python 依赖审计仍保持阻塞。

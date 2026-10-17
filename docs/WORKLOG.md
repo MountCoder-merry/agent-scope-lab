@@ -87,3 +87,23 @@
 - `bd071a0 feat: deliver trace workbench MVP`
 - `0a0e45a feat: add self-hosted trace API and experiments`
 - `079320b ci: add release, security, and self-hosting gates`
+
+## 2026-10-17 — M9 公开静态 Demo 验证
+
+### 远程门禁与修复
+
+- 首次 CI API job 失败：setuptools 自动发现 `app` 与 `migrations` 两个顶层包；新增 `apps/api/pyproject.toml` 的显式 build-system/package discovery，提交 `b1899ef`。
+- 首次 Pages job 因仓库未启用 Actions 构建源失败；通过 GitHub Pages API 将仓库配置为 `build_type=workflow` 后重跑。
+- CI 成功运行：`39035418868`（Web、API、Browser smoke 全部通过）。
+- Pages 成功运行：`39035418565`（build、configure-pages、upload、deploy 全部通过）。
+
+### 线上证据
+
+- `https://mountcoder-merry.github.io/agent-scope-lab/` → HTTP 200。
+- 页面引用的 JS/CSS → HTTP 200，无资源 404。
+- `AGENTSCOPE_BASE_URL=https://mountcoder-merry.github.io/agent-scope-lab/ python scripts/verify_ui.py` → `ui-smoke: ok; routes/import/mobile verified`。
+
+### 未完成门禁
+
+- Docker CLI 缺失，未伪造 Compose 构建/健康/重启通过。
+- npm audit 已通过（0 vulnerabilities）；pip-audit 已安装但当前 PyPI/OSV 查询超时，Python 审计保持 pending。
